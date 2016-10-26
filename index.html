@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>SIPA</title>
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <link href="http://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+        <link rel="stylesheet" href="assets/css/default.css">
+    </head>
+    <body>
+        <div class="container-fluid">
+            <div class="panel panel-default">
+                <div class="panel-heading">Período de Cobrança</div>
+                <div class="panel-body">
+                    <form action="" class="">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-2">
+                                <label for="data-inicial">De:</label>
+                                <br/>
+                                <input value="01/01/2012" type="text" class="form-control datepicker mask-date" id="data-inicial" data-start="true" data-target="#data-final">
+                            </div>
+                            <div class="col-xs-12 col-sm-2">
+                                <label for="data-final">Até:</label>
+                                <br/>
+                                <input value="01/11/2016" type="text" class="form-control datepicker mask-date" id="data-final" data-end="true" data-target="#data-inicial">
+                            </div>
+                            <div class="col-xs-12 col-sm-4">
+                                <label for="percentual-salario-minimo">Percentual de salário mínimo:</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control mask-number" id="percentual-salario-minimo">
+                                    <div class="input-group-addon">%</div>
+                                </div>
+                                <span class="small">Ex: 10.50</span>
+                            </div>
+                            <div class="col-xs-12 col-sm-4">
+                                <label for="percentual-multa">Percentual de multa sobre valor total:</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control mask-number" id="percentual-multa">
+                                    <div class="input-group-addon">%</div>
+                                </div>
+                                <span class="small">Ex: 10.50</span>
+                            </div>
+                        </div>
+
+                        <button type="button" class="btn btn-default" id="calcular"><i class="fa fa-calculator" aria-hidden="true"></i> Calcular</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">Tabela com Cálculo dos Respectivos Valores em Real</div>
+                <div class="panel-body">
+                    <div class="years">
+                        <div class="year hidden" data-year="_YEAR_">
+                            <h2 class="text-center">_YEAR_</h2>
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th class="text-center">Janeiro</th>
+                                        <th class="text-center">Fevereiro</th>
+                                        <th class="text-center">Março</th>
+                                        <th class="text-center">Abril</th>
+                                        <th class="text-center">Maio</th>
+                                        <th class="text-center">Junho</th>
+                                        <th class="text-center">Julho</th>
+                                        <th class="text-center">Agosto</th>
+                                        <th class="text-center">Setembro</th>
+                                        <th class="text-center">Outubro</th>
+                                        <th class="text-center">Novembro</th>
+                                        <th class="text-center">Dezembro</th>
+                                        <th class="text-center">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="percentual-calculado">
+                                        <td class="text-center">Percentual Calculado</td>
+                                        <td class="text-center mes janeiro">_PERCENTUAL_</td>
+                                        <td class="text-center mes fevereiro">_PERCENTUAL_</td>
+                                        <td class="text-center mes março">_PERCENTUAL_</td>
+                                        <td class="text-center mes abril">_PERCENTUAL_</td>
+                                        <td class="text-center mes maio">_PERCENTUAL_</td>
+                                        <td class="text-center mes junho">_PERCENTUAL_</td>
+                                        <td class="text-center mes julho">_PERCENTUAL_</td>
+                                        <td class="text-center mes agosto">_PERCENTUAL_</td>
+                                        <td class="text-center mes setembro">_PERCENTUAL_</td>
+                                        <td class="text-center mes outubro">_PERCENTUAL_</td>
+                                        <td class="text-center mes novembro">_PERCENTUAL_</td>
+                                        <td class="text-center mes dezembro">_PERCENTUAL_</td>
+                                        <td class="total"></td>
+                                    </tr>
+                                    <tr class="meses-pagos">
+                                        <td class="text-center">R$ pago</td>
+                                        <td><input type="text" class="janeiro form-control mask-number"></td>
+                                        <td><input type="text" class="fevereiro form-control mask-number"></td>
+                                        <td><input type="text" class="março form-control mask-number"></td>
+                                        <td><input type="text" class="abril form-control mask-number"></td>
+                                        <td><input type="text" class="maio form-control mask-number"></td>
+                                        <td><input type="text" class="junho form-control mask-number"></td>
+                                        <td><input type="text" class="julho form-control mask-number"></td>
+                                        <td><input type="text" class="agosto form-control mask-number"></td>
+                                        <td><input type="text" class="setembro form-control mask-number"></td>
+                                        <td><input type="text" class="outubro form-control mask-number"></td>
+                                        <td><input type="text" class="novembro form-control mask-number"></td>
+                                        <td><input type="text" class="dezembro form-control mask-number"></td>
+                                        <td class="total"></td>
+                                    </tr>
+                                    <tr class="inpc">
+                                        <td class="text-center">Valor Corrigido(INPC)</td>
+                                        <td class="janeiro"></td>
+                                        <td class="fevereiro"></td>
+                                        <td class="março"></td>
+                                        <td class="abril"></td>
+                                        <td class="maio"></td>
+                                        <td class="junho"></td>
+                                        <td class="julho"></td>
+                                        <td class="agosto"></td>
+                                        <td class="setembro"></td>
+                                        <td class="outubro"></td>
+                                        <td class="novembro"></td>
+                                        <td class="dezembro"></td>
+                                        <td class="total"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+        <script src="http://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+        <script src="assets/librarys/jquery-ui/js/pt-br.js"></script>
+        <script src="assets/librarys/jquery-mask/js/min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+        <script src="assets/librarys/moment/js/min.js"></script>
+        <script src="assets/js/default.js"></script>
+        <script src="assets/js/main.js"></script>
+    </body>
+</html>
