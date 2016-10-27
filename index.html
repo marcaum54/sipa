@@ -23,117 +23,260 @@
     </head>
     <body>
         <div class="container-fluid">
-            <div class="panel panel-default">
-                <div class="panel-heading">Período de Cobrança</div>
-                <div class="panel-body">
-                    <form action="" class="">
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-2">
-                                <label for="data-inicial">De:</label>
-                                <br/>
-                                <input value="01/01/2012" type="text" class="form-control datepicker mask-date" id="data-inicial" data-start="true" data-target="#data-final">
-                            </div>
-                            <div class="col-xs-12 col-sm-2">
-                                <label for="data-final">Até:</label>
-                                <br/>
-                                <input value="01/11/2016" type="text" class="form-control datepicker mask-date" id="data-final" data-end="true" data-target="#data-inicial">
-                            </div>
-                            <div class="col-xs-12 col-sm-4">
-                                <label for="percentual-salario-minimo">Percentual de salário mínimo:</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control mask-number" id="percentual-salario-minimo">
-                                    <div class="input-group-addon">%</div>
+            <ul class="nav navbar-nav">
+                <li role="presentation" class="active"><a href="#pensao-alimenticia" aria-controls="pensao-alimenticia" role="tab" data-toggle="tab">Pensão Alimentícia</a></li>
+                <li role="presentation"><a href="#calculadora-de-porcentagem" aria-controls="home" role="tab" data-toggle="tab">Calculadora de Porcentagem</a></li>
+            </ul>
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="pensao-alimenticia">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Período de Cobrança</div>
+                        <div class="panel-body">
+                            <form action="" class="">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-2">
+                                        <div class="form-group">
+                                            <label for="data-inicial">De:</label>
+                                            <input value="01/01/2015" type="text" class="form-control datepicker mask-date" id="data-inicial" data-start="true" data-target="#data-final">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-2">
+                                        <div class="form-group">
+                                            <label for="data-final">Até:</label>
+                                            <input value="01/11/2016" type="text" class="form-control datepicker mask-date" id="data-final" data-end="true" data-target="#data-inicial">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-4">
+                                        <div class="form-group">
+                                            <label for="percentual-salario-minimo">Percentual de salário mínimo:</label>
+                                            <div class="input-group">
+                                                <input value="10" type="text" class="form-control mask-percent" id="percentual-salario-minimo">
+                                                <div class="input-group-addon">%</div>
+                                            </div>
+                                            <span class="small">Ex: 10.50</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-4">
+                                        <div class="form-group">
+                                            <label for="percentual-multa">Percentual de multa sobre valor total:</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control mask-percent" id="percentual-multa">
+                                                <div class="input-group-addon">%</div>
+                                            </div>
+                                            <span class="small">Ex: 10.50</span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <span class="small">Ex: 10.50</span>
-                            </div>
-                            <div class="col-xs-12 col-sm-4">
-                                <label for="percentual-multa">Percentual de multa sobre valor total:</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control mask-number" id="percentual-multa">
-                                    <div class="input-group-addon">%</div>
+
+                                <button type="button" class="btn btn-default" id="calcular"><i class="fa fa-calculator" aria-hidden="true"></i> Calcular</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div id="resultado" class="panel panel-default hidden">
+                        <div class="panel-heading">Tabela com Cálculo dos Respectivos Valores em Real</div>
+                        <div class="panel-body">
+                            <div class="years">
+                                <div class="year hidden">
+                                    <h2 class="text-center">_YEAR_</h2>
+                                    <table id="_YEAR_" class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th class="text-center">Janeiro</th>
+                                                <th class="text-center">Fevereiro</th>
+                                                <th class="text-center">Março</th>
+                                                <th class="text-center">Abril</th>
+                                                <th class="text-center">Maio</th>
+                                                <th class="text-center">Junho</th>
+                                                <th class="text-center">Julho</th>
+                                                <th class="text-center">Agosto</th>
+                                                <th class="text-center">Setembro</th>
+                                                <th class="text-center">Outubro</th>
+                                                <th class="text-center">Novembro</th>
+                                                <th class="text-center">Dezembro</th>
+                                                <th class="text-center" width="100">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="percentual-calculado">
+                                                <td class="text-center">Percentual Calculado</td>
+                                                <td class="text-center mes Janeiro">_PERCENTUAL_</td>
+                                                <td class="text-center mes Fevereiro">_PERCENTUAL_</td>
+                                                <td class="text-center mes Março">_PERCENTUAL_</td>
+                                                <td class="text-center mes Abril">_PERCENTUAL_</td>
+                                                <td class="text-center mes Maio">_PERCENTUAL_</td>
+                                                <td class="text-center mes Junho">_PERCENTUAL_</td>
+                                                <td class="text-center mes Julho">_PERCENTUAL_</td>
+                                                <td class="text-center mes Agosto">_PERCENTUAL_</td>
+                                                <td class="text-center mes Setembro">_PERCENTUAL_</td>
+                                                <td class="text-center mes Outubro">_PERCENTUAL_</td>
+                                                <td class="text-center mes Novembro">_PERCENTUAL_</td>
+                                                <td class="text-center mes Dezembro">_PERCENTUAL_</td>
+                                                <td class="text-center total"></td>
+                                            </tr>
+                                            <tr class="meses-pagos">
+                                                <td class="text-center">R$ pago</td>
+                                                <td><input type="text" class="form-control mask-money Janeiro"></td>
+                                                <td><input type="text" class="form-control mask-money Fevereiro"></td>
+                                                <td><input type="text" class="form-control mask-money Março"></td>
+                                                <td><input type="text" class="form-control mask-money Abril"></td>
+                                                <td><input type="text" class="form-control mask-money Maio"></td>
+                                                <td><input type="text" class="form-control mask-money Junho"></td>
+                                                <td><input type="text" class="form-control mask-money Julho"></td>
+                                                <td><input type="text" class="form-control mask-money Agosto"></td>
+                                                <td><input type="text" class="form-control mask-money Setembro"></td>
+                                                <td><input type="text" class="form-control mask-money Outubro"></td>
+                                                <td><input type="text" class="form-control mask-money Novembro"></td>
+                                                <td><input type="text" class="form-control mask-money Dezembro"></td>
+                                                <td class="text-center total"></td>
+                                            </tr>
+                                            <tr class="inpc">
+                                                <td class="text-center">Valor Corrigido(INPC)</td>
+                                                <td class="text-center mes Janeiro">_PERCENTUAL_</td>
+                                                <td class="text-center mes Fevereiro">_PERCENTUAL_</td>
+                                                <td class="text-center mes Março">_PERCENTUAL_</td>
+                                                <td class="text-center mes Abril">_PERCENTUAL_</td>
+                                                <td class="text-center mes Maio">_PERCENTUAL_</td>
+                                                <td class="text-center mes Junho">_PERCENTUAL_</td>
+                                                <td class="text-center mes Julho">_PERCENTUAL_</td>
+                                                <td class="text-center mes Agosto">_PERCENTUAL_</td>
+                                                <td class="text-center mes Setembro">_PERCENTUAL_</td>
+                                                <td class="text-center mes Outubro">_PERCENTUAL_</td>
+                                                <td class="text-center mes Novembro">_PERCENTUAL_</td>
+                                                <td class="text-center mes Dezembro">_PERCENTUAL_</td>
+                                                <td class="text-center total"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
-                                <span class="small">Ex: 10.50</span>
+                            </div>
+
+                            <div id="totais" class="row">
+                                <div class="col-xs-6">
+                                    <table class="table table-bordered table-striped">
+                                        <tbody>
+                                            <tr>
+                                                <th>Total</th>
+                                                <td id="total" class="text-center"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Total da Multa</th>
+                                                <td id="total-da-multa" class="text-center"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Total Geral</th>
+                                                <td id="total-geral" class="text-center"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-xs-6">
+                                    <table class="table table-bordered table-striped">
+                                        <tbody>
+                                            <tr>
+                                                <th>Total com INPC</th>
+                                                <td id="total-inpc" class="text-center"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Total da Multa com INPC</th>
+                                                <td id="total-da-multa-com-inpc" class="text-center"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Total Geral INPC</th>
+                                                <td id="total-geral-com-inpc" class="text-center"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
-
-                        <button type="button" class="btn btn-default" id="calcular"><i class="fa fa-calculator" aria-hidden="true"></i> Calcular</button>
-                    </form>
+                    </div>
                 </div>
-            </div>
-
-            <div class="panel panel-default">
-                <div class="panel-heading">Tabela com Cálculo dos Respectivos Valores em Real</div>
-                <div class="panel-body">
-                    <div class="years">
-                        <div class="year hidden" data-year="_YEAR_">
-                            <h2 class="text-center">_YEAR_</h2>
-                            <table class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th class="text-center">Janeiro</th>
-                                        <th class="text-center">Fevereiro</th>
-                                        <th class="text-center">Março</th>
-                                        <th class="text-center">Abril</th>
-                                        <th class="text-center">Maio</th>
-                                        <th class="text-center">Junho</th>
-                                        <th class="text-center">Julho</th>
-                                        <th class="text-center">Agosto</th>
-                                        <th class="text-center">Setembro</th>
-                                        <th class="text-center">Outubro</th>
-                                        <th class="text-center">Novembro</th>
-                                        <th class="text-center">Dezembro</th>
-                                        <th class="text-center">Total</th>
-                                    </tr>
-                                </thead>
+                <div role="tabpanel" class="tab-pane" id="calculadora-de-porcentagem">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <table class="table table-bordered table-hover table-striped">
                                 <tbody>
-                                    <tr class="percentual-calculado">
-                                        <td class="text-center">Percentual Calculado</td>
-                                        <td class="text-center mes janeiro">_PERCENTUAL_</td>
-                                        <td class="text-center mes fevereiro">_PERCENTUAL_</td>
-                                        <td class="text-center mes março">_PERCENTUAL_</td>
-                                        <td class="text-center mes abril">_PERCENTUAL_</td>
-                                        <td class="text-center mes maio">_PERCENTUAL_</td>
-                                        <td class="text-center mes junho">_PERCENTUAL_</td>
-                                        <td class="text-center mes julho">_PERCENTUAL_</td>
-                                        <td class="text-center mes agosto">_PERCENTUAL_</td>
-                                        <td class="text-center mes setembro">_PERCENTUAL_</td>
-                                        <td class="text-center mes outubro">_PERCENTUAL_</td>
-                                        <td class="text-center mes novembro">_PERCENTUAL_</td>
-                                        <td class="text-center mes dezembro">_PERCENTUAL_</td>
-                                        <td class="total"></td>
+                                    <tr>
+                                        <td class="text-center" width="400">Quanto é</td>
+                                        <td class="text-center" width="200">
+                                            <div class="input-group">
+                                                <input class="form-control">
+                                                <div class="input-group-addon">%</div>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">de</td>
+                                        <td class="text-center" width="200">
+                                            <div class="input-group">
+                                                <div class="input-group-addon">R$</div>
+                                                <input class="form-control">
+                                            </div>
+                                        </td>
+                                        <td class="text-center">?</td>
+                                        <td></td>
+                                        <td class="text-center"><button type="button" class="btn btn-default">Calcular</button></td>
                                     </tr>
-                                    <tr class="meses-pagos">
-                                        <td class="text-center">R$ pago</td>
-                                        <td><input type="text" class="janeiro form-control mask-number"></td>
-                                        <td><input type="text" class="fevereiro form-control mask-number"></td>
-                                        <td><input type="text" class="março form-control mask-number"></td>
-                                        <td><input type="text" class="abril form-control mask-number"></td>
-                                        <td><input type="text" class="maio form-control mask-number"></td>
-                                        <td><input type="text" class="junho form-control mask-number"></td>
-                                        <td><input type="text" class="julho form-control mask-number"></td>
-                                        <td><input type="text" class="agosto form-control mask-number"></td>
-                                        <td><input type="text" class="setembro form-control mask-number"></td>
-                                        <td><input type="text" class="outubro form-control mask-number"></td>
-                                        <td><input type="text" class="novembro form-control mask-number"></td>
-                                        <td><input type="text" class="dezembro form-control mask-number"></td>
-                                        <td class="total"></td>
+
+                                    <tr>
+                                        <td><span class="cardica">O valor</span></td>
+                                        <td><input size="5" name="c" class="form-control"></td>
+                                        <td>é qual porcentagem <span class="style4">de</span></td>
+                                        <td><input size="5" name="d" class="form-control"></td>
+                                        <td>?</td>
+                                        <td><input size="5" name="total2" class="form-control"></td>
+                                        <td>%</td>
+                                        <td><input onclick="perc2()" type="button" value="Calcular" class="btn"></td>
                                     </tr>
-                                    <tr class="inpc">
-                                        <td class="text-center">Valor Corrigido(INPC)</td>
-                                        <td class="janeiro"></td>
-                                        <td class="fevereiro"></td>
-                                        <td class="março"></td>
-                                        <td class="abril"></td>
-                                        <td class="maio"></td>
-                                        <td class="junho"></td>
-                                        <td class="julho"></td>
-                                        <td class="agosto"></td>
-                                        <td class="setembro"></td>
-                                        <td class="outubro"></td>
-                                        <td class="novembro"></td>
-                                        <td class="dezembro"></td>
-                                        <td class="total"></td>
+                                    <tr>
+                                        <td><span class="cardica">Eu tenho um valor de</span></td>
+                                        <td><input name="e" size="5" class="form-control"></td>
+                                        <td>que <strong>AUMENTOU</strong> para</td>
+                                        <td><input name="f" size="5" class="form-control"></td>
+                                        <td> Qual foi o aumento percentual?</td>
+                                        <td><input size="5" name="total3" class="form-control"></td>
+                                        <td>%</td>
+                                        <td><input onclick="perc3()" type="button" value="Calcular" class="btn"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="cardica">Eu tenho um valor de</span></td>
+                                        <td><input name="g" size="5" class="form-control"></td>
+                                        <td>que <strong>DIMINUIU</strong> para</td>
+                                        <td><input name="h" size="5" class="form-control"></td>
+                                        <td>Qual foi a diminuição percentual?</td>
+                                        <td><input size="5" name="total4" class="form-control"></td>
+                                        <td>%</td>
+                                        <td><input onclick="perc4()" type="button" value="Calcular" class="btn"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="cardica">O valor</span></td>
+                                        <td><input name="i" size="5" class="form-control"></td>
+                                        <td>sobre o valor</td>
+                                        <td><input name="j" id="j" size="5" class="form-control"></td>
+                                        <td>é quantos por cento?</td>
+                                        <td><input size="5" name="total5" class="form-control"></td>
+                                        <td>%</td>
+                                        <td><input onclick="perc5()" type="button" value="Calcular" class="btn"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="cardica">Eu tenho um valor de</span></td>
+                                        <td><input name="k" id="k" size="5" class="form-control"></td>
+                                        <td>e quero <strong>AUMENTAR</strong></td>
+                                        <td><input name="l" id="l" size="5" class="form-control"></td>
+                                        <td>%. Qual é o resultado?</td>
+                                        <td><input size="5" name="total6" class="form-control"></td>
+                                        <td></td>
+                                        <td><input onclick="perc6()" type="button" value="Calcular" class="btn"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="cardica">Eu tenho um valor de</span></td>
+                                        <td><input name="m" id="m" size="5" class="form-control"></td>
+                                        <td>e quero <strong>DIMINUIR </strong></td>
+                                        <td><input name="n" id="n" size="5" class="form-control"></td>
+                                        <td>%. Qual é o resultado?</td>
+                                        <td><input size="5" name="total7" class="form-control"></td>
+                                        <td></td>
+                                        <td><input type="button" value="Calcular" class="btn"></td>
                                     </tr>
                                 </tbody>
                             </table>

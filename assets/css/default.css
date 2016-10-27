@@ -2,6 +2,12 @@
 
 .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th { vertical-align: middle }
 
-.year h2 { margin: 10px 0 25px 0 }
+.year h2 { margin: 50px 0 15px 0 }
 
 table.table { margin-bottom: 0; }
+
+#totais { margin-top: 50px; }
+
+.tab-content { padding-top: 75px; }
+
+.container-fluid { padding-top: 20px; }

@@ -2,8 +2,8 @@
 {
     moment.locale('pt-br');
 
-    $('.mask-number').mask("#0.00", {reverse: true});
-    $('.mask-date').mask('00/00/0000');
+    $('.mask-date').mask('00/00/0000', {clearIfNotMatch: true});
+    $('.mask-percent').mask('##0.00', {reverse: true});
 
     $('input.datepicker').datepicker({
         dateFormat: 'dd/mm/yy',
