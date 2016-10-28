@@ -88,9 +88,21 @@
         $('.mask-money').mask('0.000.000,00', {reverse: true});
     }
 
-    function format_money(value)
+    reset_masks();
+
+    function presenter_money(value, hasPrefix)
     {
-        return 'R$ '+ parseFloat(value).toFixed(2);
+        var prefix = typeof hasPrefix === 'undefined' || hasPrefix === true ? 'R$ ': '';
+
+        return prefix +  value.toFixed(2).replace('.', ',').replace(/./g, function(c, i, a)
+        {
+            return i && c !== "," && ((a.length - i) % 3 === 0) ? '.' + c : c;
+        });
+    }
+
+    function sanitizer_money(value)
+    {
+        return parseFloat(value.replace('R$ ', '').replace('.', '').replace(',', '.'));
     }
 
     function calcular_porcentagem(total, valor)
@@ -128,7 +140,7 @@
 
         $('table:visible .percentual-calculado .total').each(function()
         {
-            total += parseFloat($(this).html().replace('R$ ', '')) || 0;
+            total += sanitizer_money($(this).html()) || 0;
         });
 
         return total;
@@ -140,7 +152,7 @@
 
         $('table:visible .meses-pagos .total').each(function()
         {
-            total += parseFloat($(this).html().replace('R$ ', '')) || 0;
+            total += sanitizer_money($(this).html()) || 0;
         });
 
         return total;
@@ -152,7 +164,7 @@
 
         $('table:visible .inpc .total').each(function()
         {
-            total += parseFloat($(this).html().replace('R$ ', '')) || 0;
+            total += sanitizer_money($(this).html()) || 0;
         });
 
         return total;
@@ -214,7 +226,7 @@
                     total += parseFloat($(this).html().replace('R$ ', '')) || 0;
                 });
 
-                total_field.html(format_money(total));
+                total_field.html(presenter_money(total));
             });
 
             $(this).parents('.meses-pagos').each(function()
@@ -223,10 +235,10 @@
 
                 $(this).find('input[type=text]').each(function()
                 {
-                    total += parseFloat($(this).val().replace('R$ ', '').replace('.', '').replace(',', '.')) || 0;
+                    total += sanitizer_money($(this).val()) || 0;
                 });
 
-                total_field.html(format_money(total));
+                total_field.html(presenter_money(total));
             });
 
             $(this).parents('.inpc').each(function()
@@ -241,17 +253,17 @@
                         total += parseFloat(value.replace('R$ ', '')) || 0;
                 });
 
-                total_field.html(format_money(total));
+                total_field.html(presenter_money(total));
             });
         });
 
-        $('#total').html(format_money(calcular_total()));
-        $('#total-da-multa').html(format_money(calcular_total_multa()));
-        $('#total-geral').html(format_money(calcular_total_geral()));
+        $('#total').html(presenter_money(calcular_total()));
+        $('#total-da-multa').html(presenter_money(calcular_total_multa()));
+        $('#total-geral').html(presenter_money(calcular_total_geral()));
 
-        $('#total-inpc').html(format_money(calcular_total_inpc()));
-        $('#total-da-multa-com-inpc').html(format_money(calcular_total_multa_inpc()));
-        $('#total-geral-com-inpc').html(format_money(calcular_total_geral_inpc()));
+        $('#total-inpc').html(presenter_money(calcular_total_inpc()));
+        $('#total-da-multa-com-inpc').html(presenter_money(calcular_total_multa_inpc()));
+        $('#total-geral-com-inpc').html(presenter_money(calcular_total_geral_inpc()));
     }
 
     function create_and_feed_tables()
@@ -280,12 +292,17 @@
                     var inpc = INPCS[ano][moment.months().indexOf(meses[i])];
                     var calculo_inpc = calcular_inpc(porcentagem_salario_minimo, inpc);
 
-                    table.find('.percentual-calculado .mes.'+ meses[i]).html(format_money(porcentagem_salario_minimo));
-                    table.find('.inpc .mes.'+ meses[i]).html('<small>('+ inpc +'%)</small><div class="value">'+ format_money(calculo_inpc) +'</div>');
+                    table.find('.percentual-calculado .mes.'+ meses[i]).html(presenter_money(porcentagem_salario_minimo));
+                    table.find('.inpc .mes.'+ meses[i]).html('<small>('+ inpc +'%)</small><div class="value">'+ presenter_money(calculo_inpc) +'</div>');
                 }
             }
         }
     }
+
+    $(document).on('blur', 'table:visible input[type=text]', function()
+    {
+        atualizar_totais();
+    });
 
     $('#calcular').click(function()
     {
@@ -300,9 +317,81 @@
         }
     });
 
-    $(document).on('blur', 'table:visible input[type=text]', function()
+    $('#calcular-porcentagem').click(function()
     {
-        atualizar_totais();
+        var parent = $(this).parents('tr');
+
+        var porcentagem = parent.find('.form-control:eq(0)').val();
+        var valor = sanitizer_money(parent.find('.form-control:eq(1)').val());
+
+        var resultado = get_valor_porcentagem(valor, porcentagem) || 0;
+
+        parent.find('input[readonly]').val(presenter_money(resultado, false));
+    });
+
+    $('.calcular-valor-porcentagem').click(function()
+    {
+        var parent = $(this).parents('tr');
+
+        var valor_1 = sanitizer_money(parent.find('.form-control:eq(0)').val());
+        var valor_2 = sanitizer_money(parent.find('.form-control:eq(1)').val());
+
+        var resultado = calcular_porcentagem(valor_2, valor_1) || 0;
+
+        parent.find('input[readonly]').val(resultado);
+    });
+
+    $('#valor-aumentou').click(function()
+    {
+        var parent = $(this).parents('tr');
+
+        var valor_1 = sanitizer_money(parent.find('.form-control:eq(0)').val());
+        var valor_2 = sanitizer_money(parent.find('.form-control:eq(1)').val());
+
+        var diff = valor_2 - valor_1;
+        console.debug(diff);
+
+        var resultado = calcular_porcentagem(valor_1, diff) || 0;
+
+        parent.find('input[readonly]').val(resultado);
+    });
+
+    $('#valor-diminuiu').click(function()
+    {
+        var parent = $(this).parents('tr');
+
+        var valor_1 = sanitizer_money(parent.find('.form-control:eq(0)').val());
+        var valor_2 = sanitizer_money(parent.find('.form-control:eq(1)').val());
+
+        var diff = valor_1 - valor_2;
+
+        var resultado = calcular_porcentagem(valor_1, diff) || 0;
+
+        parent.find('input[readonly]').val(resultado);
+    });
+
+    $('#valor-aumentar').click(function()
+    {
+        var parent = $(this).parents('tr');
+
+        var valor = sanitizer_money(parent.find('.form-control:eq(0)').val());
+        var porcentagem = parent.find('.form-control:eq(1)').val();
+
+        var resultado = valor + get_valor_porcentagem(valor, porcentagem) || 0;
+
+        parent.find('input[readonly]').val(presenter_money(resultado, false));
+    });
+
+    $('#valor-diminuir').click(function()
+    {
+        var parent = $(this).parents('tr');
+
+        var valor = sanitizer_money(parent.find('.form-control:eq(0)').val());
+        var porcentagem = parent.find('.form-control:eq(1)').val();
+
+        var resultado = valor - get_valor_porcentagem(valor, porcentagem) || 0;
+
+        parent.find('input[readonly]').val(presenter_money(resultado, false));
     });
 })
 (jQuery);

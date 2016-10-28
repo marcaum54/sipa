@@ -24,7 +24,7 @@
     <body>
         <div class="container-fluid">
             <ul class="nav navbar-nav">
-                <li role="presentation" class="active"><a href="#pensao-alimenticia" aria-controls="pensao-alimenticia" role="tab" data-toggle="tab">Pensão Alimentícia</a></li>
+                <li role="presentation"class="active"><a href="#pensao-alimenticia" aria-controls="pensao-alimenticia" role="tab" data-toggle="tab">Pensão Alimentícia</a></li>
                 <li role="presentation"><a href="#calculadora-de-porcentagem" aria-controls="home" role="tab" data-toggle="tab">Calculadora de Porcentagem</a></li>
             </ul>
             <div class="tab-content">
@@ -37,20 +37,20 @@
                                     <div class="col-xs-12 col-sm-2">
                                         <div class="form-group">
                                             <label for="data-inicial">De:</label>
-                                            <input value="01/01/2015" type="text" class="form-control datepicker mask-date" id="data-inicial" data-start="true" data-target="#data-final">
+                                            <input type="text" class="form-control datepicker mask-date" id="data-inicial" data-start="true" data-target="#data-final">
                                         </div>
                                     </div>
                                     <div class="col-xs-12 col-sm-2">
                                         <div class="form-group">
                                             <label for="data-final">Até:</label>
-                                            <input value="01/11/2016" type="text" class="form-control datepicker mask-date" id="data-final" data-end="true" data-target="#data-inicial">
+                                            <input type="text" class="form-control datepicker mask-date" id="data-final" data-end="true" data-target="#data-inicial">
                                         </div>
                                     </div>
                                     <div class="col-xs-12 col-sm-4">
                                         <div class="form-group">
                                             <label for="percentual-salario-minimo">Percentual de salário mínimo:</label>
                                             <div class="input-group">
-                                                <input value="10" type="text" class="form-control mask-percent" id="percentual-salario-minimo">
+                                                <input type="text" class="form-control mask-percent" id="percentual-salario-minimo">
                                                 <div class="input-group-addon">%</div>
                                             </div>
                                             <span class="small">Ex: 10.50</span>
@@ -194,94 +194,178 @@
                     </div>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="calculadora-de-porcentagem">
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <table class="table table-bordered table-hover table-striped">
-                                <tbody>
-                                    <tr>
-                                        <td class="text-center" width="400">Quanto é</td>
-                                        <td class="text-center" width="200">
-                                            <div class="input-group">
-                                                <input class="form-control">
-                                                <div class="input-group-addon">%</div>
-                                            </div>
-                                        </td>
-                                        <td class="text-center">de</td>
-                                        <td class="text-center" width="200">
-                                            <div class="input-group">
-                                                <div class="input-group-addon">R$</div>
-                                                <input class="form-control">
-                                            </div>
-                                        </td>
-                                        <td class="text-center">?</td>
-                                        <td></td>
-                                        <td class="text-center"><button type="button" class="btn btn-default">Calcular</button></td>
-                                    </tr>
-
-                                    <tr>
-                                        <td><span class="cardica">O valor</span></td>
-                                        <td><input size="5" name="c" class="form-control"></td>
-                                        <td>é qual porcentagem <span class="style4">de</span></td>
-                                        <td><input size="5" name="d" class="form-control"></td>
-                                        <td>?</td>
-                                        <td><input size="5" name="total2" class="form-control"></td>
-                                        <td>%</td>
-                                        <td><input onclick="perc2()" type="button" value="Calcular" class="btn"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><span class="cardica">Eu tenho um valor de</span></td>
-                                        <td><input name="e" size="5" class="form-control"></td>
-                                        <td>que <strong>AUMENTOU</strong> para</td>
-                                        <td><input name="f" size="5" class="form-control"></td>
-                                        <td> Qual foi o aumento percentual?</td>
-                                        <td><input size="5" name="total3" class="form-control"></td>
-                                        <td>%</td>
-                                        <td><input onclick="perc3()" type="button" value="Calcular" class="btn"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><span class="cardica">Eu tenho um valor de</span></td>
-                                        <td><input name="g" size="5" class="form-control"></td>
-                                        <td>que <strong>DIMINUIU</strong> para</td>
-                                        <td><input name="h" size="5" class="form-control"></td>
-                                        <td>Qual foi a diminuição percentual?</td>
-                                        <td><input size="5" name="total4" class="form-control"></td>
-                                        <td>%</td>
-                                        <td><input onclick="perc4()" type="button" value="Calcular" class="btn"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><span class="cardica">O valor</span></td>
-                                        <td><input name="i" size="5" class="form-control"></td>
-                                        <td>sobre o valor</td>
-                                        <td><input name="j" id="j" size="5" class="form-control"></td>
-                                        <td>é quantos por cento?</td>
-                                        <td><input size="5" name="total5" class="form-control"></td>
-                                        <td>%</td>
-                                        <td><input onclick="perc5()" type="button" value="Calcular" class="btn"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><span class="cardica">Eu tenho um valor de</span></td>
-                                        <td><input name="k" id="k" size="5" class="form-control"></td>
-                                        <td>e quero <strong>AUMENTAR</strong></td>
-                                        <td><input name="l" id="l" size="5" class="form-control"></td>
-                                        <td>%. Qual é o resultado?</td>
-                                        <td><input size="5" name="total6" class="form-control"></td>
-                                        <td></td>
-                                        <td><input onclick="perc6()" type="button" value="Calcular" class="btn"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><span class="cardica">Eu tenho um valor de</span></td>
-                                        <td><input name="m" id="m" size="5" class="form-control"></td>
-                                        <td>e quero <strong>DIMINUIR </strong></td>
-                                        <td><input name="n" id="n" size="5" class="form-control"></td>
-                                        <td>%. Qual é o resultado?</td>
-                                        <td><input size="5" name="total7" class="form-control"></td>
-                                        <td></td>
-                                        <td><input type="button" value="Calcular" class="btn"></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                    <table class="table table-bordered table-hover table-striped">
+                        <tbody>
+                            <tr>
+                                <td class="text-center" width="500">Quanto é</td>
+                                <td class="text-center" width="200">
+                                    <div class="input-group">
+                                        <input class="form-control mask-percent">
+                                        <div class="input-group-addon">%</div>
+                                    </div>
+                                </td>
+                                <td class="text-center" width="500">de</td>
+                                <td class="text-center" width="200">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">R$</div>
+                                        <input class="form-control mask-money">
+                                    </div>
+                                </td>
+                                <td class="text-center" width="500">=</td>
+                                <td width="200">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">R$</div>
+                                        <input class="form-control" readonly>
+                                    </div>
+                                </td>
+                                <td class="text-center" width="50"><button id="calcular-porcentagem" type="button" class="btn btn-default"><i class="fa fa-calculator"></i></button></td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">O valor</td>
+                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">R$</div>
+                                        <input class="form-control mask-money">
+                                    </div>
+                                </td>
+                                <td class="text-center">é qual porcentagem de</td>
+                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">R$</div>
+                                        <input class="form-control mask-money">
+                                    </div>
+                                </td>
+                                <td class="text-center">=</td>
+                                <td>
+                                    <div class="input-group">
+                                        <input class="form-control" readonly>
+                                        <div class="input-group-addon">%</div>
+                                    </div>
+                                </td>
+                                <td class="text-center"><button class="btn btn-default calcular-valor-porcentagem"><i class="fa fa-calculator"></i></button></td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">Eu tenho um valor de</td>
+                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">R$</div>
+                                        <input class="form-control mask-money">
+                                    </div>
+                                </td>
+                                <td class="text-center">que <b class="text-uppercase">aumentou</b> para</td>
+                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">R$</div>
+                                        <input class="form-control mask-money">
+                                    </div>
+                                </td>
+                                <td class="text-center"> Qual foi o aumento percentual?</td>
+                                <td>
+                                    <div class="input-group">
+                                        <input class="form-control" readonly>
+                                        <div class="input-group-addon">%</div>
+                                    </div>
+                                </td>
+                                <td class="text-center"><button id="valor-aumentou" class="btn btn-default"><i class="fa fa-calculator"></i></button></td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">Eu tenho um valor de</td>
+                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">R$</div>
+                                        <input class="form-control mask-money">
+                                    </div>
+                                </td>
+                                <td class="text-center">que <b class="text-uppercase">diminuiu</b> para</td>
+                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">R$</div>
+                                        <input class="form-control mask-money">
+                                    </div>
+                                </td>
+                                <td class="text-center">Qual foi a diminuição percentual?</td>
+                                <td>
+                                    <div class="input-group">
+                                        <input class="form-control" readonly>
+                                        <div class="input-group-addon">%</div>
+                                    </div>
+                                </td>
+                                <td class="text-center"><button id="valor-diminuiu" class="btn btn-default"><i class="fa fa-calculator"></i></button></td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">O valor</td>
+                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">R$</div>
+                                        <input class="form-control mask-money">
+                                    </div>
+                                </td>
+                                <td class="text-center">sobre o valor</td>
+                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">R$</div>
+                                        <input class="form-control mask-money">
+                                    </div>
+                                </td>
+                                <td class="text-center">é quantos por cento?</td>
+                                <td>
+                                    <div class="input-group">
+                                        <input class="form-control" readonly>
+                                        <div class="input-group-addon">%</div>
+                                    </div>
+                                </td>
+                                <td class="text-center"><button class="btn btn-default calcular-valor-porcentagem"><i class="fa fa-calculator"></i></button></td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">Eu tenho um valor de</td>
+                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">R$</div>
+                                        <input class="form-control mask-money">
+                                    </div>
+                                </td>
+                                <td class="text-center">e quero <b class="text-uppercase">aumentar</b></td>
+                                <td>
+                                    <div class="input-group">
+                                        <input class="form-control mask-percent">
+                                        <div class="input-group-addon">%</div>
+                                    </div>
+                                </td>
+                                <td class="text-center">Qual é o resultado?</td>
+                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">R$</div>
+                                        <input class="form-control" readonly>
+                                    </div>
+                                </td>
+                                <td class="text-center"><button id="valor-aumentar" class="btn btn-default"><i class="fa fa-calculator"></i></button></td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">Eu tenho um valor de</td>
+                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">R$</div>
+                                        <input class="form-control mask-money">
+                                    </div>
+                                </td>
+                                <td class="text-center">e quero <b class="text-uppercase">diminuir</b></td>
+                                <td>
+                                    <div class="input-group">
+                                        <input class="form-control mask-percent">
+                                        <div class="input-group-addon">%</div>
+                                    </div>
+                                </td>
+                                <td class="text-center">Qual é o resultado?</td>
+                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">R$</div>
+                                        <input class="form-control" readonly>
+                                    </div>
+                                </td>
+                                <td class="text-center"><button id="valor-diminuir" class="btn btn-default"><i class="fa fa-calculator"></i></button></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
